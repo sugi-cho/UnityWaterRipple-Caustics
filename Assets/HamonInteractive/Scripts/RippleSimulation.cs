@@ -228,13 +228,11 @@ namespace HamonInteractive
         {
             if (!enableMouseInput || !Application.isPlaying) { _mouseWasDown = false; return; }
 
+            // 1フレームごとに Force をクリアして「軌跡」を残さない
+            ClearForceTexture();
+
             bool isDown = Input.GetMouseButton(0) || Input.GetMouseButton(1);
-            if (!isDown)
-            {
-                if (_mouseWasDown) ClearForceTexture();
-                _mouseWasDown = false;
-                return;
-            }
+            if (!isDown) { _mouseWasDown = false; return; }
 
             var cam = mouseCamera != null ? mouseCamera : Camera.main;
             Vector3 mouse = Input.mousePosition;
