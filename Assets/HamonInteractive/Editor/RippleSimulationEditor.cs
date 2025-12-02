@@ -114,6 +114,13 @@ namespace HamonInteractive.Editor
                 EditorGUILayout.ObjectField("Result RT", sim.ResultTexture, typeof(RenderTexture), false);
                 EditorGUILayout.ObjectField("Force RT", sim.ForceTexture, typeof(RenderTexture), false);
             }
+
+            if (Application.isPlaying && _showPreviews.boolValue)
+            {
+                // プレイ中にプレビューを更新し続ける
+                Repaint();
+                EditorApplication.QueuePlayerLoopUpdate();
+            }
         }
 
         private void DrawPreview(Texture tex, string label)

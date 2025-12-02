@@ -52,6 +52,7 @@ namespace HamonInteractive
         private RenderTexture _force;
         private RenderTexture _result;
         private bool _useAasRead = true;
+        private bool _mouseWasDown = false;
 
         private int _kernelSim;
         private int _kernelNormals;
@@ -223,9 +224,15 @@ namespace HamonInteractive
 
         private void HandleMouseInput()
         {
-            if (!enableMouseInput) return;
-            if (!Application.isPlaying) return;
-            if (!Input.GetMouseButton(0) && !Input.GetMouseButton(1)) return;
+            if (!enableMouseInput || !Application.isPlaying) { _mouseWasDown = false; return; }
+
+            bool isDown = Input.GetMouseButton(0) || Input.GetMouseButton(1);
+            if (!isDown)
+            {
+                if (_mouseWasDown) ClearForceTexture();
+                _mouseWasDown = false;
+                return;
+            }
 
             var cam = mouseCamera != null ? mouseCamera : Camera.main;
             Vector3 mouse = Input.mousePosition;
@@ -244,6 +251,7 @@ namespace HamonInteractive
 
             float sign = Input.GetMouseButton(0) ? 1f : -1f;
             StampForce(uv, mouseRadius, mouseStrength * sign, mouseFalloff);
+            _mouseWasDown = true;
         }
 
         private void StampForce(Vector2 uv, float radius, float strength, float falloff)

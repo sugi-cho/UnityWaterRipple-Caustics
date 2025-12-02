@@ -3,7 +3,13 @@ guid: dba720dd270a4d348b5bc0d14b066c38
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - rippleCompute: {fileID: 7200000, guid: faf2081549b14ffda6cf8b4fe8ee8dc2, type: 3}
+  - boundaryTexture: {instanceID: 0}
+  - depthTexture: {instanceID: 0}
+  - flowTexture: {instanceID: 0}
+  - externalForce: {instanceID: 0}
+  - mouseCamera: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
