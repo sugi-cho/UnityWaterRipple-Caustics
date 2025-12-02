@@ -1,0 +1,48 @@
+# Unity が生成するキャッシュ/ビルド成果物
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Uu]ser[Ss]ettings/
+[Mm]emoryCaptures/
+[Rr]ecordings/
+[Gg]radle/
+[Aa]sset[Ii]mport[Ii]nfo/
+[Ss]ysinfo.txt
+
+# IDE・エディタ関連
+.vs/
+.idea/
+.vscode/
+*.sln
+*.csproj
+*.unityproj
+*.suo
+*.user
+*.userprefs
+*.pidb
+*.booproj
+*.svd
+*.opendb
+*.VC.db
+*.pdb
+
+# 一時ファイル
+*.tmp
+*.bak
+*.orig
+*.log
+*.mdb
+*.exe.config
+*.dll.config
+
+# パッケージ/ビルド成果物
+*.apk
+*.aab
+*.app
+*.ipa
+*.unitypackage
+
+# Rider/Visual Studio Code が生成する設定は必要に応じて除外解除

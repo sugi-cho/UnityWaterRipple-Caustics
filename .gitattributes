@@ -1,0 +1,42 @@
+* text=auto
+
+# C# などテキスト扱い
+*.cs text diff=csharp
+*.shader text
+*.compute text
+*.cginc text
+*.hlsl text
+
+# Unity の YAML アセット
+*.meta text
+*.unity text
+*.anim text
+*.controller text
+*.prefab text
+*.overrideController text
+*.mat text
+*.physicMaterial text
+*.physicMaterial2D text
+*.terrainlayer text
+*.asset text
+*.lighting text
+*.preset text
+*.guiskin text
+
+# バイナリ扱い
+*.dll binary
+*.exe binary
+*.so binary
+*.dylib binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.tga binary
+*.psd binary
+*.fbx binary
+*.obj binary
+*.wav binary
+*.mp3 binary
+*.ogg binary
+*.mp4 binary
+*.mov binary
