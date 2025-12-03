@@ -423,7 +423,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1879381702}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -441,7 +441,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: a1ea141b8e94ec441ad71e041c627bff, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -733,20 +733,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HamonInteractive.RippleSimulation
   rippleCompute: {fileID: 7200000, guid: faf2081549b14ffda6cf8b4fe8ee8dc2, type: 3}
   resolution: {x: 1024, y: 512}
-  waveSpeed: 16
+  waveSpeed: 50
   timeScale: 1
-  damping: 0.25
-  amplitudeDecay: 0.2
+  damping: 0.05
+  amplitudeDecay: 0
   depthScale: 1
   flowScale: 1
   boundaryBounce: 1
-  forceToVelocity: 8
-  horizontalEdge: 1
+  forceToVelocity: 16
+  horizontalEdge: 2
   verticalEdge: 0
   useFixedTimeStep: 1
-  fixedTimeStep: 0.01
-  maxSubSteps: 4
-  maxAccumulatedTime: 0.25
+  fixedTimeStep: 0.008333334
+  maxSubSteps: 8
+  maxAccumulatedTime: 0.01
   outputTexture: {fileID: 8400000, guid: a1e3e2d2df09c1447aa0f2e39ec0bbcd, type: 2}
   autoBlitResult: 1
   boundaryTexture: {fileID: 0}
@@ -754,7 +754,7 @@ MonoBehaviour:
   flowTexture: {fileID: 0}
   externalForce: {fileID: 0}
   useExternalForce: 0
-  showPreviews: 1
+  showPreviews: 0
 --- !u!4 &2021220527
 Transform:
   m_ObjectHideFlags: 0
@@ -874,13 +874,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2119533833}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.541, z: -1}
+  m_LocalRotation: {x: 0.08715578, y: 0, z: 0, w: 0.9961947}
+  m_LocalPosition: {x: 0, y: 1, z: -2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 10, y: 0, z: 0}
 --- !u!114 &2119533837
 MonoBehaviour:
   m_ObjectHideFlags: 0

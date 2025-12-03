@@ -32,8 +32,8 @@ namespace HamonInteractive
 
         [Header("時間ステップ")]
         [SerializeField] private bool useFixedTimeStep = true;
-        [SerializeField, Range(1f / 240f, 1f / 15f)] private float fixedTimeStep = 1f / 60f;
-        [SerializeField, Range(1, 8)] private int maxSubSteps = 4;
+        [SerializeField, Range(1f / 240f, 1f / 15f)] private float fixedTimeStep = 1f / 90f;
+        [SerializeField, Range(1, 16)] private int maxSubSteps = 4;
         [SerializeField, Tooltip("accumulator が暴走しないための上限秒数")] private float maxAccumulatedTime = 0.25f;
 
         [Header("出力")]
@@ -194,11 +194,7 @@ namespace HamonInteractive
                 }
 
                 // 低FPSで積み残しが小さい場合は一度だけ処理して遅延を防ぐ
-                if (steps == 0 && _timeAccumulator > 0f && _timeAccumulator < fixedTimeStep * 0.5f)
-                {
-                    StepSim(_timeAccumulator);
-                    _timeAccumulator = 0f;
-                }
+                
             }
             else
             {
@@ -296,3 +292,7 @@ namespace HamonInteractive
 #endif
     }
 }
+
+
+
+

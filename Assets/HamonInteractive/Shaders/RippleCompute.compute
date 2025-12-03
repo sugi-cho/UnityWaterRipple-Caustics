@@ -160,8 +160,12 @@ void SimStep(uint3 id : SV_DispatchThreadID)
     int2 coord = int2(id.xy);
     float2 uv = (coord + 0.5) * _InvSimSize;
 
+    // dt spike guard
+    float dt = min(_DeltaTime, 0.05);
+    float dt2 = dt * dt;
+
     float2 flow = (_UseFlow != 0) ? _FlowTex.SampleLevel(samplerLinearClamp, uv, 0).xy * _FlowScale : 0;
-    float2 backUV = uv - flow * _DeltaTime;
+    float2 backUV = uv - flow * dt;
 
     float2 state = sampleStateAdvected(backUV);
     float h = state.x;      // 現在高さ
@@ -175,11 +179,13 @@ void SimStep(uint3 id : SV_DispatchThreadID)
         return;
     }
 
-    float force = sampleForce(uv) * _ForceToVelocity;
+    float force = sampleForce(uv);
+    force = clamp(force, -50.0, 50.0);
+    force *= _ForceToVelocity;
     float depth = sampleDepth(uv);
     float c = _WaveSpeed * (1 + depth * _DepthScale);
-    // 安定化: CFL 条件 c*dt <= 1/sqrt(2) を少し余裕ありでクランプ
-    float cMax = 0.7 / max(_DeltaTime, 1e-5);
+    // 安定化: CFL 条件 c*dt <= 1/sqrt(2) より余裕を持ってクランプ
+    float cMax = 0.5 / max(dt, 1e-5);
     c = min(c, cMax);
 
     float hL = fetchHeightOffset(backUV, uv, int2(-1, 0), h);
@@ -189,8 +195,6 @@ void SimStep(uint3 id : SV_DispatchThreadID)
 
     float lap = (hL + hR + hD + hU - 4.0 * h);
 
-    float dt = _DeltaTime;
-    float dt2 = dt * dt;
     float c2dt2 = (c * c) * dt2;
 
     // 中央差分の波動方程式: h_{n+1} = (2 - d*dt)h_n - (1 - d*dt)h_{n-1} + c^2 dt^2 lap + F dt^2
@@ -210,6 +214,9 @@ void SimStep(uint3 id : SV_DispatchThreadID)
         hNext = 0;
         h = 0;
     }
+
+    // 発散対策のハードクランプ
+    hNext = clamp(hNext, -32.0, 32.0);
 
     _StateWrite[coord] = float2(hNext, h);
 }
