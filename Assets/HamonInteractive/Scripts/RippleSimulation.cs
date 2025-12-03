@@ -18,6 +18,7 @@ namespace HamonInteractive
         [SerializeField, Range(0f, 50f)] private float waveSpeed = 8.0f;
         [SerializeField, Range(0.1f, 5f)] private float timeScale = 1.0f;
         [SerializeField, Range(0f, 1f)] private float damping = 0.02f;
+        [SerializeField, Range(0f, 2f)] private float amplitudeDecay = 0.05f;
         [SerializeField] private float depthScale = 1.0f;
         [SerializeField] private float flowScale = 1.0f;
         [SerializeField] private float boundaryBounce = 1.0f;
@@ -172,6 +173,7 @@ namespace HamonInteractive
 
             rippleCompute.SetFloat("_DeltaTime", deltaTime);
             rippleCompute.SetFloat("_Damping", damping);
+            rippleCompute.SetFloat("_AmplitudeDecay", amplitudeDecay);
             rippleCompute.SetFloat("_WaveSpeed", waveSpeed);
             rippleCompute.SetFloat("_DepthScale", depthScale);
             rippleCompute.SetFloat("_FlowScale", flowScale);

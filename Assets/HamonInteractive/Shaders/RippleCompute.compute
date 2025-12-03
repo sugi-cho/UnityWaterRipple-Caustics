@@ -39,6 +39,7 @@ cbuffer RippleParams
 {
     float _DeltaTime;
     float _Damping;
+    float _AmplitudeDecay;
     float _WaveSpeed;
     float _DepthScale;
     float _FlowScale;
@@ -138,6 +139,10 @@ void SimStep(uint3 id : SV_DispatchThreadID)
     v += (c * c * lap - _Damping * v) * _DeltaTime;
     v += force * _DeltaTime;
     h += v * _DeltaTime;
+
+    float decay = max(1.0 - _AmplitudeDecay * _DeltaTime, 0.0);
+    h *= decay;
+    v *= decay;
 
     _StateWrite[coord] = float2(h, v);
 }

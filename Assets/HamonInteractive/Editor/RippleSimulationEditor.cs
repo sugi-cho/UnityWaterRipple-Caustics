@@ -12,6 +12,7 @@ namespace HamonInteractive.Editor
         private SerializedProperty _waveSpeed;
         private SerializedProperty _timeScale;
         private SerializedProperty _damping;
+        private SerializedProperty _amplitudeDecay;
         private SerializedProperty _depthScale;
         private SerializedProperty _flowScale;
         private SerializedProperty _boundaryBounce;
@@ -35,6 +36,7 @@ namespace HamonInteractive.Editor
             _waveSpeed = serializedObject.FindProperty("waveSpeed");
             _timeScale = serializedObject.FindProperty("timeScale");
             _damping = serializedObject.FindProperty("damping");
+            _amplitudeDecay = serializedObject.FindProperty("amplitudeDecay");
             _depthScale = serializedObject.FindProperty("depthScale");
             _flowScale = serializedObject.FindProperty("flowScale");
             _boundaryBounce = serializedObject.FindProperty("boundaryBounce");
@@ -61,6 +63,7 @@ namespace HamonInteractive.Editor
             EditorGUILayout.PropertyField(_waveSpeed);
             EditorGUILayout.PropertyField(_timeScale, new GUIContent("Time Scale"));
             EditorGUILayout.PropertyField(_damping);
+            EditorGUILayout.PropertyField(_amplitudeDecay, new GUIContent("Amplitude Decay"));
             EditorGUILayout.PropertyField(_depthScale);
             EditorGUILayout.PropertyField(_flowScale);
             EditorGUILayout.PropertyField(_boundaryBounce);
