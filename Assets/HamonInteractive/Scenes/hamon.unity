@@ -392,12 +392,16 @@ MonoBehaviour:
   resolution: {x: 512, y: 512}
   waveSpeed: 16
   timeScale: 1
-  damping: 0.02
-  amplitudeDecay: 0.05
+  damping: 0.25
+  amplitudeDecay: 0.2
   depthScale: 1
   flowScale: 1
   boundaryBounce: 1
   forceToVelocity: 1
+  useFixedTimeStep: 1
+  fixedTimeStep: 0.016666668
+  maxSubSteps: 4
+  maxAccumulatedTime: 0.25
   outputTexture: {fileID: 8400000, guid: a1e3e2d2df09c1447aa0f2e39ec0bbcd, type: 2}
   autoBlitResult: 1
   boundaryTexture: {fileID: 0}
