@@ -167,8 +167,8 @@ void MakeNormals(uint3 id : SV_DispatchThreadID)
     float dhx = (hR - hL);
     float dhy = (hU - hD);
 
-    // y 軸を強調し過度な傾斜を抑える
-    float3 n = normalize(float3(-dhx, 2.0, -dhy));
+    // z を上方向にした法線（フラットで (0,0,1) -> エンコード後は青系）
+    float3 n = normalize(float3(-dhx, -dhy, 1.0));
     float3 encoded = n * 0.5 + 0.5;
 
     _Result[coord] = float4(encoded, hC);
