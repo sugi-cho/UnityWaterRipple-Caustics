@@ -17,6 +17,9 @@ namespace HamonInteractive.Editor
         private SerializedProperty _boundaryBounce;
         private SerializedProperty _forceToVelocity;
 
+        private SerializedProperty _outputTexture;
+        private SerializedProperty _autoBlitResult;
+
         private SerializedProperty _boundaryTexture;
         private SerializedProperty _depthTexture;
         private SerializedProperty _flowTexture;
@@ -36,6 +39,9 @@ namespace HamonInteractive.Editor
             _flowScale = serializedObject.FindProperty("flowScale");
             _boundaryBounce = serializedObject.FindProperty("boundaryBounce");
             _forceToVelocity = serializedObject.FindProperty("forceToVelocity");
+
+            _outputTexture = serializedObject.FindProperty("outputTexture");
+            _autoBlitResult = serializedObject.FindProperty("autoBlitResult");
 
             _boundaryTexture = serializedObject.FindProperty("boundaryTexture");
             _depthTexture = serializedObject.FindProperty("depthTexture");
@@ -59,6 +65,11 @@ namespace HamonInteractive.Editor
             EditorGUILayout.PropertyField(_flowScale);
             EditorGUILayout.PropertyField(_boundaryBounce);
             EditorGUILayout.PropertyField(_forceToVelocity);
+
+            EditorGUILayout.Space();
+            EditorGUILayout.LabelField("Output", EditorStyles.boldLabel);
+            EditorGUILayout.PropertyField(_outputTexture, new GUIContent("Output Texture"));
+            EditorGUILayout.PropertyField(_autoBlitResult, new GUIContent("Auto Blit Result"));
 
             EditorGUILayout.Space();
             EditorGUILayout.LabelField("Input Textures", EditorStyles.boldLabel);

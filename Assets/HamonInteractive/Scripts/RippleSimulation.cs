@@ -23,6 +23,11 @@ namespace HamonInteractive
         [SerializeField] private float boundaryBounce = 1.0f;
         [SerializeField] private float forceToVelocity = 1.0f;
 
+        [Header("出力")]
+        [Tooltip("シミュレーション結果をBlitで書き出す先。未設定なら内部RTのみ。")]
+        [SerializeField] private RenderTexture outputTexture;
+        [SerializeField] private bool autoBlitResult = true;
+
         [Header("入力テクスチャ")]
         [Tooltip("白=水面, 黒=地面の境界テクスチャ")]
         [SerializeField] private Texture boundaryTexture;
@@ -40,6 +45,7 @@ namespace HamonInteractive
         public RenderTexture ResultTexture => _result;
         public RenderTexture ForceTexture => _force;
         public RenderTexture StateTexture => StateRead;
+        public RenderTexture OutputTexture { get => outputTexture; set => outputTexture = value; }
 
         private RenderTexture _stateA;
         private RenderTexture _stateB;
@@ -80,6 +86,7 @@ namespace HamonInteractive
             if (!EnsureResources()) return;
 
             Simulate(Time.deltaTime);
+            BlitResultIfNeeded();
         }
 
         public void ClearForceTexture()
@@ -195,6 +202,13 @@ namespace HamonInteractive
             DispatchByTexture(_kernelNormals, resolution);
         }
 
+        private void BlitResultIfNeeded()
+        {
+            if (!autoBlitResult) return;
+            if (outputTexture == null) return;
+            BlitResult(outputTexture);
+        }
+
         private void DispatchByTexture(int kernel, Vector2Int size)
         {
             int gx = Mathf.CeilToInt(size.x / (float)ThreadGroup);
@@ -223,6 +237,12 @@ namespace HamonInteractive
             rippleCompute.SetVector("_Brush", new Vector4(uv.x, uv.y, radius, strength));
             rippleCompute.SetFloat("_BrushFalloff", falloff);
             DispatchByTexture(_kernelBrush, resolution);
+        }
+
+        public void BlitResult(RenderTexture target)
+        {
+            if (target == null || _result == null) return;
+            Graphics.Blit(_result, target);
         }
 
 #if UNITY_EDITOR
