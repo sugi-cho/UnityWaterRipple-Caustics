@@ -51,6 +51,11 @@
 - `RippleMouseDebug` が MeshCollider へレイキャストし、ヒット UV を RippleSimulation に適用します。
 - `targetMeshCollider` を指定するとそのコライダー以外への入力を無視できます（スクリーン座標デバッグは廃止）。
 
+
 ## 注意
 - `ProjectSettings/ProjectVersion.txt` で Unity 6000.2.8f1 を確認すること。
 - 大きな生成物（Library, Temp, Logs など）はコミットしないでください。
+
+
+## Movie
+https://github.com/user-attachments/assets/9df4a116-d174-4b62-95b5-62a68fcabf17
