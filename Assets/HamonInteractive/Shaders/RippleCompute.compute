@@ -216,7 +216,7 @@ void SimStep(uint3 id : SV_DispatchThreadID)
     }
 
     // 発散対策のハードクランプ
-    hNext = clamp(hNext, -32.0, 32.0);
+    hNext = clamp(hNext, -256.0, 256.0);
 
     _StateWrite[coord] = float2(hNext, h);
 }
