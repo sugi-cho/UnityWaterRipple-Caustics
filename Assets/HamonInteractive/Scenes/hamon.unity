@@ -784,8 +784,8 @@ MonoBehaviour:
   resolution: {x: 1024, y: 512}
   waveSpeed: 50
   timeScale: 1
-  damping: 0.05
-  amplitudeDecay: 0.1
+  damping: 0.1
+  amplitudeDecay: 0.01
   depthScale: 1
   flowScale: 1
   boundaryBounce: 1
@@ -803,7 +803,7 @@ MonoBehaviour:
   flowTexture: {fileID: 0}
   externalForce: {fileID: 0}
   useExternalForce: 0
-  showPreviews: 0
+  showPreviews: 1
 --- !u!4 &2021220527
 Transform:
   m_ObjectHideFlags: 0

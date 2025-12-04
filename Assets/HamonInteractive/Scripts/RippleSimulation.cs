@@ -23,7 +23,6 @@ namespace HamonInteractive
         [SerializeField] private float flowScale = 1.0f;
         [SerializeField] private float boundaryBounce = 1.0f;
         [SerializeField] private float forceToVelocity = 1.0f;
-        [SerializeField, Tooltip("この勾配以下の微小高さ変化は法線に反映しない")] private float normalNoiseThreshold = 0.0015f;
 
         public enum EdgeMode { Bounce = 0, Absorb = 1, Wrap = 2 }
 
@@ -215,7 +214,6 @@ namespace HamonInteractive
             rippleCompute.SetFloat("_FlowScale", flowScale);
             rippleCompute.SetFloat("_BoundaryBounce", boundaryBounce);
             rippleCompute.SetFloat("_ForceToVelocity", forceToVelocity);
-            rippleCompute.SetFloat("_NormalNoiseThreshold", normalNoiseThreshold);
             rippleCompute.SetInt("_EdgeModeHorizontal", (int)horizontalEdge);
             rippleCompute.SetInt("_EdgeModeVertical", (int)verticalEdge);
             rippleCompute.SetFloats("_InvSimSize", 1f / resolution.x, 1f / resolution.y);

@@ -45,7 +45,6 @@ cbuffer RippleParams
     float _FlowScale;
     float _BoundaryBounce;
     float _ForceToVelocity;
-    float _NormalNoiseThreshold;
     float2 _InvSimSize;
     int2 _SimSize;
     int _UseBoundary;
@@ -209,16 +208,10 @@ void SimStep(uint3 id : SV_DispatchThreadID)
     hNext *= decay;
     h *= decay;
 
-    // Dead zone for tiny residual oscillations
+    // Dead zone (relaxed to let very small waves propagate)
     float vel = hNext - h;
-    if (abs(hNext) < 1e-3 && abs(vel) < 1e-3)
-    {
-        hNext = 0;
-        h = 0;
-    }
-
-    // 半精度への丸めノイズを防ぐため微小値をゼロクリップ
-    if (abs(hNext) < 5e-4 && abs(h) < 5e-4)
+    const float deadZone = 1e-5;
+    if (abs(hNext) < deadZone && abs(vel) < deadZone)
     {
         hNext = 0;
         h = 0;
@@ -240,26 +233,35 @@ void MakeNormals(uint3 id : SV_DispatchThreadID)
     int2 right = int2(min(coord.x + 1, _SimSize.x - 1), coord.y);
     int2 down = int2(coord.x, max(coord.y - 1, 0));
     int2 up = int2(coord.x, min(coord.y + 1, _SimSize.y - 1));
+    int2 upLeft = int2(left.x, up.y);
+    int2 upRight = int2(right.x, up.y);
+    int2 downLeft = int2(left.x, down.y);
+    int2 downRight = int2(right.x, down.y);
 
     float hL = _StateRead.Load(int3(left, 0)).x;
     float hR = _StateRead.Load(int3(right, 0)).x;
     float hD = _StateRead.Load(int3(down, 0)).x;
     float hU = _StateRead.Load(int3(up, 0)).x;
+    float hUL = _StateRead.Load(int3(upLeft, 0)).x;
+    float hUR = _StateRead.Load(int3(upRight, 0)).x;
+    float hDL = _StateRead.Load(int3(downLeft, 0)).x;
+    float hDR = _StateRead.Load(int3(downRight, 0)).x;
     float hC = _StateRead.Load(int3(coord, 0)).x;
 
-    float dhx = (hR - hL);
-    float dhy = (hU - hD);
+    // Sobel filter for smoother gradient
+    float dhx = (hR * 2.0 + hUR + hDR) - (hL * 2.0 + hUL + hDL);
+    float dhy = (hU * 2.0 + hUL + hUR) - (hD * 2.0 + hDL + hDR);
+    float2 grad = float2(dhx, dhy) * 0.5;
 
-    // 微小ノイズは法線に反映しない
-    float3 n;
-    if (abs(dhx) < _NormalNoiseThreshold && abs(dhy) < _NormalNoiseThreshold)
+    float3 n = float3(-grad.x, -grad.y, 1.0);
+    float lenSq = dot(n, n);
+    if (lenSq < 1e-8)
     {
         n = float3(0.0, 0.0, 1.0);
     }
     else
     {
-        // z を上方向にした法線（フラットで (0,0,1) -> エンコード後は青系）
-        n = normalize(float3(-dhx, -dhy, 1.0));
+        n = normalize(n);
     }
     float3 encoded = n * 0.5 + 0.5;
 

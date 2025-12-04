@@ -17,7 +17,6 @@ namespace HamonInteractive.Editor
         private SerializedProperty _flowScale;
         private SerializedProperty _boundaryBounce;
         private SerializedProperty _forceToVelocity;
-        private SerializedProperty _normalNoiseThreshold;
 
         private SerializedProperty _horizontalEdge;
         private SerializedProperty _verticalEdge;
@@ -50,7 +49,6 @@ namespace HamonInteractive.Editor
             _flowScale = serializedObject.FindProperty("flowScale");
             _boundaryBounce = serializedObject.FindProperty("boundaryBounce");
             _forceToVelocity = serializedObject.FindProperty("forceToVelocity");
-            _normalNoiseThreshold = serializedObject.FindProperty("normalNoiseThreshold");
 
             _horizontalEdge = serializedObject.FindProperty("horizontalEdge");
             _verticalEdge = serializedObject.FindProperty("verticalEdge");
@@ -86,7 +84,6 @@ namespace HamonInteractive.Editor
             EditorGUILayout.PropertyField(_flowScale);
             EditorGUILayout.PropertyField(_boundaryBounce);
             EditorGUILayout.PropertyField(_forceToVelocity);
-            EditorGUILayout.PropertyField(_normalNoiseThreshold, new GUIContent("Normal Noise Threshold"));
 
             EditorGUILayout.Space();
             EditorGUILayout.LabelField("Edge Mode", EditorStyles.boldLabel);

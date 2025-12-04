@@ -28,3 +28,6 @@
 - 2025-12-03 19:51 「RayとPlaneの交点を返すCustomHLSLを追加して」→ VFX用HLSLを新規作成し、RayPlaneIntersection 関数を実装（Custom HLSL Operator 用に out を廃止し、距離を返す仕様に修正）。
 - 2025-12-03 20:27 「direction を normal で反射したベクトルを返す関数を追加して」→ ReflectDirection を RayPlaneIntersection.hlsl に追加。
 - 2025-12-03 20:30 「Caustics VFX Graph の可視化をコミット＆プッシュして」→ 現在の差分（CausticsVisalize.vfx、hamon.unity、RayPlaneIntersection.hlsl など）をコミットし push。
+- 2025-12-04 17:41 RippleCompute デッドゾーンを緩和し、微小高さも伝搬するようノイズカットを削除
+- 2025-12-04 17:57 MakeNormals 改善: Sobelで勾配平滑化、NormalNoiseThreshold削除（Compute/C#）
+- 2025-12-04 18:04 RippleSimulationEditor NullReference対応: NormalNoiseThreshold関連のSerializedPropertyとInspector項目を削除

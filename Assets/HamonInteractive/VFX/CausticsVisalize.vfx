@@ -62,7 +62,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: UnityEditor.VFX.AABox, Unity.VisualEffectGraph.Editor,
           Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: '{"space":0,"center":{"x":0.0,"y":0.0,"z":0.0},"size":{"x":1.0,"y":1.0,"z":1.0}}'
+      m_SerializableObject: '{"center":{"x":-9.5367431640625e-7,"y":0.0,"z":-9.5367431640625e-7},"size":{"x":4.0,"y":4.0,"z":4.0}}'
     m_Space: 0
   m_Property:
     name: bounds
@@ -440,7 +440,7 @@ MonoBehaviour:
   - {fileID: 114780028408030698}
   - {fileID: 8926484042661615078}
   dataType: 0
-  capacity: 1048576
+  capacity: 2097152
   stripCapacity: 16
   particlePerStripCount: 16
   needsComputeBounds: 0
@@ -13828,7 +13828,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
           PublicKeyToken=b77a5c561934e089
-      m_SerializableObject: 10
+      m_SerializableObject: 20
     m_Space: -1
   m_Property:
     name: b
@@ -15087,7 +15087,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
           PublicKeyToken=b77a5c561934e089
-      m_SerializableObject: 0.01
+      m_SerializableObject: 0.005
     m_Space: -1
   m_Property:
     name: A
