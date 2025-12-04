@@ -785,7 +785,7 @@ MonoBehaviour:
   waveSpeed: 50
   timeScale: 1
   damping: 0.05
-  amplitudeDecay: 0
+  amplitudeDecay: 0.1
   depthScale: 1
   flowScale: 1
   boundaryBounce: 1

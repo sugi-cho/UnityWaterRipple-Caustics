@@ -45,6 +45,7 @@ cbuffer RippleParams
     float _FlowScale;
     float _BoundaryBounce;
     float _ForceToVelocity;
+    float _NormalNoiseThreshold;
     float2 _InvSimSize;
     int2 _SimSize;
     int _UseBoundary;
@@ -249,8 +250,17 @@ void MakeNormals(uint3 id : SV_DispatchThreadID)
     float dhx = (hR - hL);
     float dhy = (hU - hD);
 
-    // z を上方向にした法線（フラットで (0,0,1) -> エンコード後は青系）
-    float3 n = normalize(float3(-dhx, -dhy, 1.0));
+    // 微小ノイズは法線に反映しない
+    float3 n;
+    if (abs(dhx) < _NormalNoiseThreshold && abs(dhy) < _NormalNoiseThreshold)
+    {
+        n = float3(0.0, 0.0, 1.0);
+    }
+    else
+    {
+        // z を上方向にした法線（フラットで (0,0,1) -> エンコード後は青系）
+        n = normalize(float3(-dhx, -dhy, 1.0));
+    }
     float3 encoded = n * 0.5 + 0.5;
 
     _Result[coord] = float4(encoded, hC);
