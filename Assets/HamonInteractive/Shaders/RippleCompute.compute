@@ -202,11 +202,19 @@ void SimStep(uint3 id : SV_DispatchThreadID)
     float hNext = (2.0 * h - hPrev) * dampingTerm + c2dt2 * lap + force * dt2;
 
     // 高周波アーチファクト抑制用の微少な数値粘性
-    hNext += 0.001 * lap;
+    hNext += 0.003 * lap;
 
     float decay = max(1.0 - _AmplitudeDecay * dt, 0.0);
     hNext *= decay;
     h *= decay;
+
+    // Dead zone for tiny residual oscillations
+    float vel = hNext - h;
+    if (abs(hNext) < 1e-3 && abs(vel) < 1e-3)
+    {
+        hNext = 0;
+        h = 0;
+    }
 
     // 半精度への丸めノイズを防ぐため微小値をゼロクリップ
     if (abs(hNext) < 5e-4 && abs(h) < 5e-4)
@@ -272,3 +280,4 @@ void ClearForce(uint3 id : SV_DispatchThreadID)
     int2 coord = int2(id.xy);
     _ForceTarget[coord] = 0.0;
 }
+
