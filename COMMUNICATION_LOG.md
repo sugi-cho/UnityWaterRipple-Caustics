@@ -49,3 +49,4 @@
 - 2025-12-08 20:27 「フォトンスプラットの警告/エラー修正」→ CausticsPhotonMesh.shader の色計算を修正し、CausticsPhotonSplat.compute のuint比較警告を解消
 - 2025-12-08 21:05 「PhotonSplatはRTなしで直接加算描画に簡素化して」→ CausticsPhotonSplat.cs から RT 出力を廃止し、メッシュを直接 Additive 描画する構成に変更
 - 2025-12-09 00:10 「PhotonSplatの生成メッシュをシーン保存しないように」→ CausticsPhotonSplat.cs で生成メッシュ/マテリアルに HideAndDontSave を設定し、Disable時にメッシュを破棄するように変更
+- 2025-12-09 00:25 「方針をAGENTSに明記して」→ AGENTS.md に動的生成メッシュ/マテリアルは HideAndDontSave としシーン保存しない方針を追記

@@ -8,3 +8,4 @@
 - 生成物（Library, Temp, Logs, Build/Builds, UserSettings など）はコミットしない。.gitignore を遵守。
 - 新規パッケージ追加時は `Packages/manifest.json` と `Packages/packages-lock.json` の差分を確認。
 - 作業履歴は `COMMUNICATION_LOG.md` に時系列で追記すること。
+- フォトンスプラット等の動的生成メッシュ・マテリアルは `HideAndDontSave` を付与し、シーンに保存しない（保存されていた場合は除去する）。
