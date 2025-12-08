@@ -66,7 +66,7 @@ namespace HamonInteractive
             if (targetLight != null && targetLight.type == LightType.Directional)
             {
                 // Directional Light の光線進行方向は -transform.forward（ライトへの方向は +forward）
-                lightProp = -targetLight.transform.forward.normalized;
+                lightProp = targetLight.transform.forward.normalized;
                 lightType = LightTypeFlag.Directional;
             }
             else if (targetLight != null)

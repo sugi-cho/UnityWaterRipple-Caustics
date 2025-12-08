@@ -113,20 +113,6 @@
         {
             "m_OutputSlot": {
                 "m_Node": {
-                    "m_Id": "71f8613f1cec4b8a82cad339dec96aea"
-                },
-                "m_SlotId": 3
-            },
-            "m_InputSlot": {
-                "m_Node": {
-                    "m_Id": "2586be4948cb4d4c950654bbfd005356"
-                },
-                "m_SlotId": 0
-            }
-        },
-        {
-            "m_OutputSlot": {
-                "m_Node": {
                     "m_Id": "7d4c3cfd33134c9eab0cec0069afa44c"
                 },
                 "m_SlotId": 2
@@ -217,7 +203,7 @@
             },
             "m_InputSlot": {
                 "m_Node": {
-                    "m_Id": "ab8e36eb4deb49dd8abb6a449369aaca"
+                    "m_Id": "6e8bba2d62904680a9feae33d1954dac"
                 },
                 "m_SlotId": 0
             }
@@ -808,8 +794,8 @@
     "m_StageCapability": 2,
     "m_Value": {
         "x": 0.0,
-        "y": 0.15932098031044007,
-        "z": 0.21832877397537232
+        "y": 0.0,
+        "z": 0.0
     },
     "m_DefaultValue": {
         "x": 0.5,
@@ -1595,7 +1581,7 @@
     },
     "m_Name": "Sample Texture 2D",
     "m_DrawState": {
-        "m_Expanded": true,
+        "m_Expanded": false,
         "m_Position": {
             "serializedVersion": "2",
             "x": -1019.0,
@@ -1658,10 +1644,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -742.8570556640625,
-            "y": 287.4285888671875,
-            "width": 209.142822265625,
-            "height": 126.85714721679688
+            "x": -743.0,
+            "y": 292.0,
+            "width": 208.0,
+            "height": 125.0
         }
     },
     "m_Slots": [
@@ -1737,7 +1723,7 @@
     "m_Hidden": false,
     "m_ShaderOutputName": "Smoothness",
     "m_StageCapability": 2,
-    "m_Value": 0.8999999761581421,
+    "m_Value": 0.0,
     "m_DefaultValue": 0.5,
     "m_Labels": []
 }

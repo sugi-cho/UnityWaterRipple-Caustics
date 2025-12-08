@@ -4,6 +4,7 @@
     "com.unity.multiplayer.center": "1.0.0",
     "com.unity.render-pipelines.universal": "17.2.0",
     "com.unity.visualeffectgraph": "17.2.0",
+    "jp.keijiro.metamesh": "1.2.1",
     "jp.keijiro.noiseshader": "3.0.1",
     "jp.keijiro.shadergraphassets": "2.5.2",
     "com.unity.modules.accessibility": "1.0.0",
