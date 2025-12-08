@@ -54,7 +54,7 @@ Shader "Hidden/Hamon/CausticsPhotonMesh"
             half4 frag(v2f i) : SV_Target
             {
                 if (i.intensity <= 0) discard;
-                float3 c = ((_ColorTint == 0) ? 1.0.xxx : _ColorTint.rgb) * i.intensity;
+                float3 c = _ColorTint.rgb * i.intensity;
                 return half4(c, 1);
             }
             ENDHLSL

@@ -61,7 +61,7 @@ void Clear(uint3 id : SV_DispatchThreadID)
 [numthreads(THREAD_ACCUM, THREAD_ACCUM, 1)]
 void Accumulate(uint3 id : SV_DispatchThreadID)
 {
-    if (id.x >= _SourceResolution.x || id.y >= _SourceResolution.y) return;
+    if (id.x >= (uint)_SourceResolution.x || id.y >= (uint)_SourceResolution.y) return;
 
     float2 uv = (float2(id.xy) + 0.5) / float2(_SourceResolution);
     float3 nTex = DecodeNormal(_ResultTex.SampleLevel(samplerLinearClamp, uv, 0).xyz);
