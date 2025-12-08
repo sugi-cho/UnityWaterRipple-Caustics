@@ -36,3 +36,11 @@
 - 2025-12-04 20:05 RTフォーマット変更: RippleSimulationのRTをFloat系に更新、VFX/Shader反映
 - 2025-12-04 20:28 RippleMouseDebug 改修: MeshColliderにレイキャストしUVでRipple入力、スクリーン座標デバッグ廃止
 - 2025-12-04 22:02 README更新: ノーマル調整パラメータ・FloatRT・RippleMouseDebug仕様を追記
+- 2025-12-08 13:38 「ShaderGraph用コースティクス計算ノードを用意して」→ CausticsCustomNodes.hlsl を追加し、反射/屈折の平面交点とUV密度計算を実装
+- 2025-12-08 13:43 「Custom Function Node の命名/精度規約に合わせて」→ CausticsCustomNodes.hlsl を precision suffix 付き関数に書き直し、float/half 両対応を追加
+- 2025-12-08 13:47 「コースティクスマテリアルへライト/壁パラメータを渡すC#を作成して」→ CausticsMaterialBinder.cs を追加し、ライト種別・位置/方向、壁位置/法線、反射/屈折種別を MaterialPropertyBlock で設定する機能を実装
+- 2025-12-08 13:50 「_WallNormal にプロパティ名を修正して」→ CausticsMaterialBinder.cs のシェーダープロパティ名を _WallNormal に修正
+- 2025-12-08 13:55 「反射/屈折はノードで計算するのでHLSLはRay→Plane交差のみに」→ CausticsCustomNodes.hlsl を CausticsRayToPlane_* に簡素化し、rayOrigin/dir から hitPos/UV/mask を返す構成へ変更
+- 2025-12-08 15:23 「デスクトップ想定なのでfloat精度だけに」→ CausticsCustomNodes.hlsl から half 版を削除し、float 精度の関数のみ残す構成に調整
+- 2025-12-08 15:40 「壁法線を PlanePropertyBinder と合わせて transform.up に」→ CausticsMaterialBinder.cs の wallNormal 設定を forward から up に変更
+- 2025-12-08 15:43 「Directional Light の向きコメントを確認・明記」→ CausticsMaterialBinder.cs のコメントを光線進行方向は -forward と明示する内容に更新
