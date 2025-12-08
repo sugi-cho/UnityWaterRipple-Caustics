@@ -24,7 +24,6 @@ namespace HamonInteractive
 
         [Header("出力")]
         [SerializeField] private Vector2Int targetResolution = new Vector2Int(256, 256);
-        [SerializeField] private RenderTexture causticsRT;
 
         [Header("パラメータ")]
         [SerializeField] private CausticsType causticsType = CausticsType.Reflection;
@@ -82,28 +81,6 @@ namespace HamonInteractive
             if (photonCompute == null) return;
             _kernelClear = photonCompute.FindKernel("Clear");
             _kernelAcc = photonCompute.FindKernel("Accumulate");
-        }
-
-        private bool EnsureOutputRT()
-        {
-            if (causticsRT != null &&
-                causticsRT.width == targetResolution.x &&
-                causticsRT.height == targetResolution.y)
-            {
-                return true;
-            }
-
-            if (causticsRT != null) causticsRT.Release();
-            causticsRT = new RenderTexture(targetResolution.x, targetResolution.y, 0, RenderTextureFormat.ARGBHalf)
-            {
-                enableRandomWrite = false,
-                filterMode = FilterMode.Bilinear,
-                wrapMode = TextureWrapMode.Clamp,
-                useMipMap = false,
-                name = "CausticsPhotonRT"
-            };
-            causticsRT.Create();
-            return true;
         }
 
         private void EnsureMesh()
@@ -178,7 +155,6 @@ namespace HamonInteractive
             var srcTex = ripple.ResultTexture;
             if (srcTex == null) return;
 
-            EnsureOutputRT();
             EnsureMesh();
             EnsureBuffers();
 
@@ -233,11 +209,8 @@ namespace HamonInteractive
             _material.SetColor("_ColorTint", colorTint);
             _material.SetVector("_Resolution", new Vector4(targetResolution.x, targetResolution.y, 0, 0));
 
-            var prev = RenderTexture.active;
-            RenderTexture.active = causticsRT;
-            GL.Clear(true, true, Color.black);
+            // Additive draw directly to the current render target (camera must be set up before calling)
             Graphics.DrawMesh(_mesh, Matrix4x4.identity, _material, 0);
-            RenderTexture.active = prev;
         }
     }
 }
