@@ -68,4 +68,78 @@ void CausticsDensityFromRUV_float(
     density = hitMask * intensity / area;
 }
 
+// ---------------------------------------------------------------------------
+// 解析ヤコビアンでレイの足跡面積を算出（フラグメントステージ想定）
+// rayOriginWS, rayDirWS はフラグメントで計算されたものを渡すと精度が高い
+// ---------------------------------------------------------------------------
+void CausticsRayFootprint_float(
+    float3 rayOriginWS,
+    float3 rayDirWS,
+    float3 planePositionWS,
+    float3 planeNormalWS,
+    float minArea,
+    out float3 hitPosWS,
+    out float2 hitUV,
+    out float hitMask,
+    out float area)
+{
+    const float kRayStartOffset = 1e-3;
+    const float kEpsilonDet = 1e-5;
+
+    float3 dir = normalize(rayDirWS);
+    float3 origin = rayOriginWS + dir * kRayStartOffset;
+
+    // 交点計算
+    float t = RayPlaneIntersection(origin, dir, planePositionWS, planeNormalWS);
+    if (t <= 0.0)
+    {
+        hitPosWS = 0.0;
+        hitUV = 0.0;
+        hitMask = 0.0;
+        area = max(minArea, kEpsilonDet);
+        return;
+    }
+
+    hitPosWS = origin + dir * (t + kRayStartOffset);
+
+    float3 tangent, bitangent;
+    BuildPlaneFrame_float(planeNormalWS, tangent, bitangent);
+    float3 delta = hitPosWS - planePositionWS;
+    hitUV = float2(dot(delta, tangent), dot(delta, bitangent));
+    hitMask = 1.0;
+
+    // ヤコビアンを解析的に計算
+    float3 dOdx = ddx(rayOriginWS);
+    float3 dOdy = ddy(rayOriginWS);
+    float3 dDdx = ddx(dir);
+    float3 dDdy = ddy(dir);
+
+    // origin にオフセットを足しているので微分も補正
+    dOdx += dDdx * kRayStartOffset;
+    dOdy += dDdy * kRayStartOffset;
+
+    float denom = dot(dir, planeNormalWS);
+    float numer = dot(planePositionWS - origin, planeNormalWS);
+    float denomSq = max(denom * denom, 1e-8);
+
+    float dn_dx = -dot(dOdx, planeNormalWS);
+    float dn_dy = -dot(dOdy, planeNormalWS);
+    float dd_dx = dot(dDdx, planeNormalWS);
+    float dd_dy = dot(dDdy, planeNormalWS);
+
+    float dt_dx = (dn_dx * denom - numer * dd_dx) / denomSq;
+    float dt_dy = (dn_dy * denom - numer * dd_dy) / denomSq;
+
+    float3 dDeltaDx = dOdx + dir * dt_dx + t * dDdx;
+    float3 dDeltaDy = dOdy + dir * dt_dy + t * dDdy;
+
+    float du_dx = dot(dDeltaDx, tangent);
+    float dv_dx = dot(dDeltaDx, bitangent);
+    float du_dy = dot(dDeltaDy, tangent);
+    float dv_dy = dot(dDeltaDy, bitangent);
+
+    float det = du_dx * dv_dy - du_dy * dv_dx;
+    area = max(abs(det), max(minArea, kEpsilonDet));
+}
+
 #endif // CAUSTICS_CUSTOM_NODES_INCLUDED
