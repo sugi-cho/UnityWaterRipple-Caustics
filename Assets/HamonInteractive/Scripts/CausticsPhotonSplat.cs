@@ -53,7 +53,6 @@ namespace HamonInteractive
                 _material = new Material(photonMeshShader);
 
             InitKernels();
-            EnsureOutputRT();
             EnsureMesh();
             EnsureBuffers();
         }
