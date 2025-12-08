@@ -51,6 +51,7 @@ namespace HamonInteractive
                 photonMeshShader = Shader.Find("Hidden/Hamon/CausticsPhotonMesh");
             if (_material == null && photonMeshShader != null)
                 _material = new Material(photonMeshShader);
+            MarkDontSave(_material);
 
             InitKernels();
             EnsureMesh();
@@ -59,6 +60,7 @@ namespace HamonInteractive
 
         private void OnDisable()
         {
+            CleanupMesh();
             _densityBuffer?.Release();
             _densityBuffer = null;
             if (_material != null)
@@ -90,6 +92,7 @@ namespace HamonInteractive
 
             _mesh = BuildGridMesh(targetResolution.x, targetResolution.y);
             _mesh.bounds = new Bounds(Vector3.zero, Vector3.one * 10000f); // カリング回避
+            MarkDontSave(_mesh);
 
             _mf = GetComponent<MeshFilter>();
             _mr = GetComponent<MeshRenderer>();
@@ -97,6 +100,24 @@ namespace HamonInteractive
             if (_mr == null) _mr = gameObject.AddComponent<MeshRenderer>();
             _mf.sharedMesh = _mesh;
             _mr.sharedMaterial = _material;
+        }
+
+        private void CleanupMesh()
+        {
+            if (_mesh != null)
+            {
+                if (Application.isPlaying) Destroy(_mesh);
+                else DestroyImmediate(_mesh);
+                _mesh = null;
+            }
+        }
+
+        private void MarkDontSave(Object obj)
+        {
+            if (obj != null)
+            {
+                obj.hideFlags = HideFlags.HideAndDontSave;
+            }
         }
 
         private Mesh BuildGridMesh(int w, int h)
