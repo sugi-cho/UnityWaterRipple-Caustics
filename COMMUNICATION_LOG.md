@@ -44,7 +44,6 @@
 - 2025-12-08 15:23 「デスクトップ想定なのでfloat精度だけに」→ CausticsCustomNodes.hlsl から half 版を削除し、float 精度の関数のみ残す構成に調整
 - 2025-12-08 15:40 「壁法線を PlanePropertyBinder と合わせて transform.up に」→ CausticsMaterialBinder.cs の wallNormal 設定を forward から up に変更
 - 2025-12-08 15:43 「Directional Light の向きコメントを確認・明記」→ CausticsMaterialBinder.cs のコメントを光線進行方向は -forward と明示する内容に更新
-- 2025-12-08 16:05 「rUV ddx/ddy の精度限界対策案その2」→ CausticsCustomNodes.hlsl に解析ヤコビアンで足跡面積を求める CausticsRayFootprint_float を追加
 - 2025-12-08 17:10 「ComputeShaderでフォトンスプラットするコンポーネントを追加」→ CausticsPhotonSplat.cs・CausticsPhotonSplat.compute・CausticsPhotonMesh.shader を追加し、テクスチャ解像度ベースのメッシュに密度を積算・描画する処理を実装
 - 2025-12-08 20:27 「フォトンスプラットの警告/エラー修正」→ CausticsPhotonMesh.shader の色計算を修正し、CausticsPhotonSplat.compute のuint比較警告を解消
 - 2025-12-08 21:05 「PhotonSplatはRTなしで直接加算描画に簡素化して」→ CausticsPhotonSplat.cs から RT 出力を廃止し、メッシュを直接 Additive 描画する構成に変更
