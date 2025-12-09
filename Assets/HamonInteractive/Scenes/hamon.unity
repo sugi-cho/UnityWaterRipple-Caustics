@@ -202,8 +202,8 @@ Transform:
   m_GameObject: {fileID: 200643614}
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 1}
-  m_LocalScale: {x: 4, y: 4, z: 4}
+  m_LocalPosition: {x: 4, y: 0, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1979833001}
@@ -225,7 +225,7 @@ GameObject:
   - component: {fileID: 318205906}
   - component: {fileID: 318205909}
   m_Layer: 0
-  m_Name: CausticsMesh
+  m_Name: CausticsMeshVfx
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -339,7 +339,7 @@ VisualEffect:
       - m_Value: {x: 39.754017, y: 321.03482, z: 336.89056}
         m_Name: LightTransform_angles
         m_Overridden: 1
-      - m_Value: {x: -4.02, y: 0, z: 0}
+      - m_Value: {x: -4, y: 0, z: 0}
         m_Name: LightTransform_position
         m_Overridden: 1
       - m_Value: {x: 1, y: 1, z: 1}
@@ -350,7 +350,10 @@ VisualEffect:
     m_Uint:
       m_Array: []
     m_Int:
-      m_Array: []
+      m_Array:
+      - m_Value: 525825
+        m_Name: VertexCount
+        m_Overridden: 1
     m_Matrix4x4f:
       m_Array: []
     m_AnimationCurve:
@@ -358,7 +361,16 @@ VisualEffect:
     m_Gradient:
       m_Array: []
     m_NamedObject:
-      m_Array: []
+      m_Array:
+      - m_Value: {fileID: 0}
+        m_Name: PositionIntensityTexture
+        m_Overridden: 1
+      - m_Value: {fileID: 881819068}
+        m_Name: RippleTexture
+        m_Overridden: 1
+      - m_Value: {fileID: 0}
+        m_Name: SourceMesh
+        m_Overridden: 1
     m_Bool:
       m_Array: []
 --- !u!4 &318205905
@@ -370,7 +382,7 @@ Transform:
   m_GameObject: {fileID: 318205901}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.02, y: 0, z: 0}
+  m_LocalPosition: {x: 4, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -475,6 +487,43 @@ Transform:
   m_Children: []
   m_Father: {fileID: 318205905}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
+--- !u!84 &881819068
+RenderTexture:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Ripple_Result
+  m_ImageContentsHash:
+    serializedVersion: 2
+    Hash: 00000000000000000000000000000000
+  m_IsAlphaChannelOptional: 0
+  serializedVersion: 6
+  m_Width: 1024
+  m_Height: 512
+  m_AntiAliasing: 1
+  m_MipCount: -1
+  m_DepthStencilFormat: 0
+  m_ColorFormat: 52
+  m_MipMap: 0
+  m_GenerateMips: 1
+  m_SRGB: 0
+  m_UseDynamicScale: 0
+  m_UseDynamicScaleExplicit: 0
+  m_BindMS: 0
+  m_EnableCompatibleFormat: 1
+  m_EnableRandomWrite: 1
+  m_TextureSettings:
+    serializedVersion: 2
+    m_FilterMode: 1
+    m_Aniso: 1
+    m_MipBias: 0
+    m_WrapU: 1
+    m_WrapV: 1
+    m_WrapW: 1
+  m_Dimension: 2
+  m_VolumeDepth: 1
+  m_ShadowSamplingMode: 2
 --- !u!1 &1362022342
 GameObject:
   m_ObjectHideFlags: 0
@@ -896,7 +945,7 @@ VisualEffect:
       - m_Value: {x: 0, y: -0.00000011920929, z: -1.0000001}
         m_Name: Wall_normal
         m_Overridden: 1
-      - m_Value: {x: 0, y: 0, z: 1}
+      - m_Value: {x: 4, y: 0, z: 1}
         m_Name: Wall_position
         m_Overridden: 1
       - m_Value: {x: 90, y: 0, z: 0}

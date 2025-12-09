@@ -24,13 +24,15 @@
 - `maxSubSteps` : 1 フレームでの最大サブステップ数。
 - `maxAccumulatedTime` : フレーム落ち時に積める上限時間。
 
-## コースティクス（簡易反射）
-- コンポーネント: `CausticsRenderer`
-- 入力: `RippleSimulation.ResultTexture`（ワールド法線/高さ）、Directional Light
-- 参照: `sourceQuad`(水面), `targetQuad`(投影先), `directionalLight`
-- 出力: `causticsRT`（加算ブレンド用テクスチャ）
-- 調整: `energyScale`(明るさ), `normalInfluence`(水面法線影響), `colorTint`
-- 実装概要: Compute で水面各テクセルから反射線を計算し、ターゲット平面上のUVにポイントを投影 → 加算シェーダで描画。ブラーは必要に応じて別途追加してください。
+## コースティクス（VFX/ShaderGraph版・推奨）
+- コンポーネント: `CausticsMeshRenderer` + `CausticsMeshVfx` (VFX Graph) + `CausticsMesh.shadergraph`
+- 入力: `RippleSimulation.ResultTexture`（ワールド法線/高さ）、`gridSize` は Ripple 解像度そのまま。
+- 仕組み: `CausticsMeshRenderer` が (W+1,H+1) メッシュと PositionIntensityTexture を生成し、VFX にバインド。VFX Graph で頂点ごとの位置/強度を書き込み、ShaderGraph で可視化する。
+- 注意: PositionIntensityTexture は外部生成(UAV有効)を VFX プロパティにセットする。VFX 内部でデフォルト生成させない。
+- 微調整: ShaderGraph 側で色/強度カーブ、VFX Graph 側で積算ロジックを編集して見た目を調整。
+
+### レガシー: コースティクス（Compute版）
+- コンポーネント: `CausticsRenderer`（既存の簡易反射パス。必要なら併用可）
 
 ## 入力テクスチャ
 - `boundaryTexture` : 白=水面、黒=地形。反射/固体セル判定に使用。

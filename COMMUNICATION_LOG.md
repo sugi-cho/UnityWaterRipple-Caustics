@@ -79,3 +79,4 @@
 - 2025-12-09 18:42 VFXCustomHLSL_Tips.md を Assets 外 (docs/) に移動。
 - 2025-12-09 18:50 CausticsMeshVfxHelpers.hlsl を単一関数 Caustics_WritePositionIntensity のみに簡素化（位置+強度をまとめて書き込み）。
 - 2025-12-09 19:05 RippleSimulation を [ExecuteAlways] 化し、エディットモードでも出力RTが更新されプレビュー可能にした。
+- 2025-12-09 19:20 README をVFX/ShaderGraphベースのコースティクス構成に更新（CausticsMeshRenderer+VFX+ShaderGraph推奨、既存Compute版はレガシー扱い）。
