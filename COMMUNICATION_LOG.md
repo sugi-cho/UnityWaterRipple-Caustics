@@ -61,3 +61,20 @@
 - 2025-12-09 14:00 Absorb をスポンジ減衰で反射しない仕様に変更し、README/コメントを更新
 - 2025-12-09 14:20 Absorb の減衰幅を12pxに拡大し二乗フェード+ゼロクリップで吸収を強化、READMEを更新
 - 2025-12-09 13:38 「コミットプッシュ依頼対応」→ 現在の差分（Ripple結果をワールド法線非パック化、Absorb境界をクランプ+スポンジ減衰化、Caustics Hit/PhotonSplat/PhotonMesh/VFX/ShaderGraph/READMEを更新）をコミットしpush。
+- 2025-12-09 14:11 CausticsMeshRendererを追加。Rippleの解像度から(W+1,H+1)メッシュとGraphicsBuffer(Position/Intensity)を生成し、Mesh VBと共にVFXへバインドする処理を実装。
+- 2025-12-09 14:37 CausticsMeshRenderer に PositionIntensityTexture (ARGBFloat, (W+1,H+1)) を生成し VFX へセットする処理を追加。
+- 2025-12-09 14:51 CausticsMeshVfxHelpers.hlsl を追加。ParticleIDとグリッド(W,H)から(PositionIntensityTexture用に)ピクセル座標を計算し、pos/intensityを書き込むヘルパーを実装。
+- 2025-12-09 15:02 CausticsMeshVfxHelpers.hlsl を VFX Custom HLSL Block 形式に変更（attributes を先頭引数、RWTexture2D/グリッド/強度/位置を引数にし PositionIntensityTexture へ書き込む関数を提供）。
+- 2025-12-09 15:24 CausticsMeshVfxHelpers.hlsl に Position/Intensity を別タイミングで書ける関数を追加し、既存の同時書き込み関数はそれらを呼ぶ形に変更。
+- 2025-12-09 15:33 CausticsMeshVfxHelpers.hlsl に PositionIntensityTexture から隣接セル面積を求め密度(1/面積平均)を返す CustomHLSL Operator 用関数 Caustics_ComputeIntensity を追加。
+- 2025-12-09 16:48 HLSL フォルダ集約に伴い CausticsCustomNodes.hlsl の include パスを Shaders/HLSL 配下参照に修正。
+- 2025-12-09 16:55 CausticsMeshVfxHelpers.hlsl から VFXCommon.hlsl include を削除し、VFX側の二重定義エラーを回避。
+- 2025-12-09 16:57 CausticsMeshVfxHelpers.hlsl に gridSize省略の3引数版 WritePosition/WriteIntensity を追加し、RTサイズから分割数を推定するヘルパーを導入。VFXの3引数呼び出しエラーに対応。
+- 2025-12-09 17:04 CausticsMeshVfxHelpers.hlsl の gridSize 推定で RWTexture2D 版を使用するよう置換し、VFX CustomHLSL 呼び出し時の型不一致を解消。
+- 2025-12-09 17:30 CausticsMeshVfxHelpers.hlsl を再整理。uint2 版を内部関数にし、float2 gridSize 版のみ外部に残して再帰コンパイルエラーを解消。
+- 2025-12-09 17:40 CausticsMeshVfxHelpers.hlsl で particleId を attributes から参照していた箇所をグローバル particleId を利用する形に変更し、Update Particle の invalid subscript エラーを回避。
+- 2025-12-09 17:48 CausticsMeshVfxHelpers.hlsl で particleId を attributes.particleId 参照に戻し、未定義エラー対応。
+- 2025-12-09 17:58 CausticsMeshVfxHelpers.hlsl を簡素化。_UInt 関数を削除し、公開関数内で直接 attributes.particleId を参照する形に変更して particleId 未使用エラーを解消。
+- 2025-12-09 18:05 VFX Custom HLSL の注意点を VFXCustomHLSL_Tips.md にまとめ（シグネチャ一意化、attributes.particleId使用、UAV生成など）。
+- 2025-12-09 18:42 VFXCustomHLSL_Tips.md を Assets 外 (docs/) に移動。
+- 2025-12-09 18:50 CausticsMeshVfxHelpers.hlsl を単一関数 Caustics_WritePositionIntensity のみに簡素化（位置+強度をまとめて書き込み）。

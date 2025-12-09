@@ -2,7 +2,7 @@
 #ifndef CAUSTICS_CUSTOM_NODES_INCLUDED
 #define CAUSTICS_CUSTOM_NODES_INCLUDED
 
-#include "../../VFX/HLSL/RayPlaneIntersection.hlsl"
+#include "RayPlaneIntersection.hlsl"
 
 // ---------------------------------------------------------------------------
 // 共通ヘルパ
