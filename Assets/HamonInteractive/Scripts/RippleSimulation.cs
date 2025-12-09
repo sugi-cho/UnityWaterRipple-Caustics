@@ -4,7 +4,7 @@ namespace HamonInteractive
 {
     /// <summary>
     /// RenderTexture ベースの波紋シミュレーション管理。
-    /// 状態: R=現在高さ, G=前フレーム高さ / 結果: RGB=法線(0-1), A=高さ
+    /// 状態: R=現在高さ, G=前フレーム高さ / 結果: RGB=Y-up ワールド法線(非パック), A=高さ
     /// </summary>
     [DisallowMultipleComponent]
     public class RippleSimulation : MonoBehaviour

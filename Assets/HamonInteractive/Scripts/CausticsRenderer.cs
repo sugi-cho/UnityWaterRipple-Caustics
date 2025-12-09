@@ -251,7 +251,6 @@ namespace HamonInteractive
             Vector3 lightDir = directionalLight ? directionalLight.transform.forward : Vector3.down;
             Vector3 srcScale = src.lossyScale;
             Vector3 tgtScale = tgt.lossyScale;
-            Vector3 srcNormal = Vector3.Normalize(Vector3.Cross(src.right, src.up));
             Vector3 tgtNormal = Vector3.Normalize(Vector3.Cross(tgt.right, tgt.up));
 
             causticsCompute.SetInts("_SourceResolution", srcW, srcH);
@@ -262,7 +261,6 @@ namespace HamonInteractive
             causticsCompute.SetVector("_SourcePos", src.position);
             causticsCompute.SetVector("_SourceRight", src.right);
             causticsCompute.SetVector("_SourceUp", src.up);
-            causticsCompute.SetVector("_SourceNormal", srcNormal);
             causticsCompute.SetVector("_SourceScale", new Vector2(srcScale.x, srcScale.y));
 
             causticsCompute.SetVector("_TargetPos", tgt.position);

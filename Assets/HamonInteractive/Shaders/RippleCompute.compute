@@ -1,6 +1,6 @@
 // 波紋シミュレーション用 Compute Shader
 // 状態: R=現在の高さ, G=前フレームの高さ（中央差分で時間二階微分を表現）
-// 出力: RGB=法線(0-1), A=高さ
+// 出力: RGB=ワールド法線(非パック, -1..1 を想定, Up=+Y), A=高さ
 
 #pragma kernel SimStep
 #pragma kernel MakeNormals
@@ -78,7 +78,7 @@ float sampleDepth(float2 uv)
     return _DepthTex.SampleLevel(samplerLinearClamp, uv, 0).r;
 }
 
-// エッジ処理を適用。戻り値: bounceMul (吸収時は -1)
+// エッジ処理を適用。戻り値: bounceMul (吸収時はクランプのみで減衰は後段で処理)
 float processEdge(inout float2 uv)
 {
     float bounceMul = 1.0;
@@ -92,7 +92,7 @@ float processEdge(inout float2 uv)
         }
         else if (_EdgeModeHorizontal == 1) // Absorb
         {
-            return -1.0;
+            uv.x = saturate(uv.x); // 端でクランプ（減衰は後でスポンジ処理）
         }
         else // Bounce
         {
@@ -110,7 +110,7 @@ float processEdge(inout float2 uv)
         }
         else if (_EdgeModeVertical == 1) // Absorb
         {
-            return -1.0;
+            uv.y = saturate(uv.y);
         }
         else // Bounce
         {
@@ -225,6 +225,34 @@ void SimStep(uint3 id : SV_DispatchThreadID)
     // 発散対策のハードクランプ
     hNext = clamp(hNext, -256.0, 256.0);
 
+    // 吸収エッジ用スポンジ: 指定方向が Absorb の場合、端付近で減衰
+    // 定数スポンジ幅（ピクセル）
+    const float absorbWidth = 12.0;
+    float fadeX = 1.0;
+    float fadeY = 1.0;
+    if (_EdgeModeHorizontal == 1) // Absorb
+    {
+        float distX = min(coord.x + 1, _SimSize.x - coord.x);
+        fadeX = saturate((distX - 0.5) / absorbWidth);
+    }
+    if (_EdgeModeVertical == 1) // Absorb
+    {
+        float distY = min(coord.y + 1, _SimSize.y - coord.y);
+        fadeY = saturate((distY - 0.5) / absorbWidth);
+    }
+    float edgeFade = min(fadeX, fadeY);
+    edgeFade = edgeFade * edgeFade; // 強めに減衰
+    if (edgeFade < 1e-3)
+    {
+        hNext = 0;
+        h = 0;
+    }
+    else
+    {
+        hNext *= edgeFade;
+        h *= edgeFade;
+    }
+
     _StateWrite[coord] = float2(hNext, h);
 }
 
@@ -258,19 +286,19 @@ void MakeNormals(uint3 id : SV_DispatchThreadID)
     float dhy = (hU * 2.0 + hUL + hUR) - (hD * 2.0 + hDL + hDR);
     float2 grad = float2(dhx, dhy) * (0.5 * _NormalGradScale);
 
-    float3 n = float3(-grad.x, -grad.y, 1.0);
+    // Y-up を基準としたワールド法線（XZ 平面上の高さマップ想定）
+    float3 n = float3(-grad.x, 1.0, -grad.y);
     float lenSq = dot(n, n);
     if (lenSq < 1e-8)
     {
-        n = float3(0.0, 0.0, 1.0);
+        n = float3(0.0, 1.0, 0.0);
     }
     else
     {
         n = normalize(n);
     }
-    float3 encoded = n * 0.5 + 0.5;
-
-    _ResultTemp[coord] = float4(encoded, hC);
+    // パッキングせずそのまま書き出し
+    _ResultTemp[coord] = float4(n, hC);
 }
 
 [numthreads(THREADS, THREADS, 1)]
@@ -291,21 +319,19 @@ void BlurNormals(uint3 id : SV_DispatchThreadID)
         for (int x = -r; x <= r; x++)
         {
             int2 c = clamp(coord + int2(x, y), int2(0, 0), _SimSize - 1);
-            float3 n = _ResultSrc.Load(int3(c, 0)).xyz * 2.0 - 1.0;
+            float3 n = _ResultSrc.Load(int3(c, 0)).xyz; // 非パック法線
             float w = exp(- (x * x + y * y) * invTwoSigma2);
             accum += n * w;
             wsum += w;
         }
     }
 
-    float3 nBlur = (wsum > 1e-6) ? accum / wsum : float3(0, 0, 1);
+    float3 nBlur = (wsum > 1e-6) ? accum / wsum : float3(0, 1, 0);
     float lenSq = dot(nBlur, nBlur);
-    if (lenSq > 1e-8) nBlur = normalize(nBlur); else nBlur = float3(0, 0, 1);
+    if (lenSq > 1e-8) nBlur = normalize(nBlur); else nBlur = float3(0, 1, 0);
 
-    float3 encoded = nBlur * 0.5 + 0.5;
     float height = _ResultSrc.Load(int3(coord, 0)).w; // 高さはそのまま
-
-    _Result[coord] = float4(encoded, height);
+    _Result[coord] = float4(nBlur, height); // 非パック
 }
 
 [numthreads(THREADS, THREADS, 1)]

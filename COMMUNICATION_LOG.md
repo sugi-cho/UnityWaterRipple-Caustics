@@ -50,3 +50,14 @@
 - 2025-12-08 21:05 「PhotonSplatはRTなしで直接加算描画に簡素化して」→ CausticsPhotonSplat.cs から RT 出力を廃止し、メッシュを直接 Additive 描画する構成に変更
 - 2025-12-09 00:10 「PhotonSplatの生成メッシュをシーン保存しないように」→ CausticsPhotonSplat.cs で生成メッシュ/マテリアルに HideAndDontSave を設定し、Disable時にメッシュを破棄するように変更
 - 2025-12-09 00:25 「方針をAGENTSに明記して」→ AGENTS.md に動的生成メッシュ/マテリアルは HideAndDontSave としシーン保存しない方針を追記
+- 2025-12-09 00:45 「PhotonSplatを空間に配置する描画へ」→ CausticsPhotonMesh.shader をワールド空間スプラット描画に変更し、CausticsPhotonSplat.cs でターゲット平面座標系をシェーダーへ渡すよう更新
+- 2025-12-09 01:05 「PhotonSplatを1枚のプレーンメッシュに統合」→ CausticsPhotonMesh.shader で解像度分割プレーン上の頂点強度を三角形面積で算出する方式に変更
+- 2025-12-09 01:25 「メッシュを完全連結のプレーンに再構築」→ CausticsPhotonSplat.cs の BuildGridMesh を (w+1)*(h+1) 頂点の分割プレーン生成に変更し、分割境界が全て共有されるよう修正
+- 2025-12-09 01:40 「頂点強度の分布を接続性重視に修正」→ CausticsPhotonMesh.shader で頂点ごとに接する4セルの平均密度×セル面積で強度を算出し、色計算が強度を乗算するよう修正
+- 2025-12-09 12:30 Ripple Result をY-upワールド法線で出力するよう変更し、CausticsHit/PhotonSplatをワールド法線前提に更新、README/プレビュー表記を調整
+- 2025-12-09 13:05 Ripple Result 法線を非パック(-1..1)で出力するよう変更し、CausticsHit/PhotonSplat/README等を合わせて更新
+- 2025-12-09 13:25 Ripple Absorb エッジをクランプ継続挙動に変更し、READMEのエッジ説明を更新
+- 2025-12-09 13:45 Ripple Absorb をミラー反射で連続させる挙動に更新（反対側へ伝搬しない）、README/コメントを更新
+- 2025-12-09 14:00 Absorb をスポンジ減衰で反射しない仕様に変更し、README/コメントを更新
+- 2025-12-09 14:20 Absorb の減衰幅を12pxに拡大し二乗フェード+ゼロクリップで吸収を強化、READMEを更新
+- 2025-12-09 13:38 「コミットプッシュ依頼対応」→ 現在の差分（Ripple結果をワールド法線非パック化、Absorb境界をクランプ+スポンジ減衰化、Caustics Hit/PhotonSplat/PhotonMesh/VFX/ShaderGraph/READMEを更新）をコミットしpush。

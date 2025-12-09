@@ -1,5 +1,5 @@
 // 水面 ResultRT から簡易反射コースティクス用のヒット情報を生成
-// 入力: ResultRT (RGB=法線), Source/Target Transform, Directional Light
+// 入力: ResultRT (RGB=ワールド法線 非パック), Source/Target Transform, Directional Light
 // 出力: _HitBuffer (xy=targetUV, z=intensity, w=validFlag)
 
 #pragma kernel GenerateHits
@@ -26,7 +26,6 @@ cbuffer CausticsParams
     float3 _SourcePos;
     float3 _SourceRight;   // unit
     float3 _SourceUp;      // unit
-    float3 _SourceNormal;  // unit
     float2 _SourceScale;   // quad scale (x,y)
 
     float3 _TargetPos;
@@ -36,11 +35,6 @@ cbuffer CausticsParams
     float2 _TargetScale;   // quad scale (x,y)
 }
 
-float3 DecodeNormal(float3 enc)
-{
-    return enc * 2.0 - 1.0;
-}
-
 [numthreads(THREADS, THREADS, 1)]
 void GenerateHits(uint3 id : SV_DispatchThreadID)
 {
@@ -48,11 +42,8 @@ void GenerateHits(uint3 id : SV_DispatchThreadID)
     uint index = id.y * _SourceResolution.x + id.x;
 
     float2 uv = (float2(id.xy) + 0.5) / float2(_SourceResolution);
-    float3 nTex = DecodeNormal(_ResultTex.SampleLevel(samplerLinearClamp, uv, 0).xyz);
-
-    // ワールド法線（平面法線とのブレンドで影響度を調整）
-    float3 nWorld = normalize(nTex.x * _SourceRight + nTex.y * _SourceUp + nTex.z * _SourceNormal);
-    nWorld = normalize(lerp(_SourceNormal, nWorld, saturate(_NormalInfluence)));
+    float3 nWorld = _ResultTex.SampleLevel(samplerLinearClamp, uv, 0).xyz;
+    nWorld = normalize(lerp(float3(0, 1, 0), nWorld, saturate(_NormalInfluence)));
 
     // 水面上のワールド座標（QuadローカルXY: -0.5..0.5）
     float2 local = (uv - 0.5) * _SourceScale;

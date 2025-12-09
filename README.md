@@ -12,10 +12,10 @@
 - `flowScale` : フローテクスチャによる移流の強さ。
 - `boundaryBounce` : 境界での反射係数。
 - `forceToVelocity` : ブラシ/外力を速度に変換する係数。
-- `horizontalEdge` / `verticalEdge` : テクスチャ端での処理モード（Bounce=反射, Absorb=吸収, Wrap=反対側へループ）。
-- **Normals**
+- `horizontalEdge` / `verticalEdge` : テクスチャ端での処理モード（Bounce=反射, Absorb=端でクランプし伝搬を止める, Wrap=反対側へループ）。
+- `horizontalEdge` / `verticalEdge` : テクスチャ端での処理モード（Bounce=反射, Absorb=端から約12pxを強減衰させて消す, Wrap=反対側へループ）。
   - `normalGradScale` : Sobel 勾配の倍率。法線の強さを調整。
-  - `normalBlurRadius` : 法線ガウシアンぼかし半径（0〜3）。
+  - `normalBlurRadius` : 法線ガウシアンぼかし半径(0~3)。
   - `normalBlurSigma` : ぼかしのシグマ。
 
 ### 時間ステップ
@@ -26,7 +26,7 @@
 
 ## コースティクス（簡易反射）
 - コンポーネント: `CausticsRenderer`
-- 入力: `RippleSimulation.ResultTexture`（法線/高さ）、Directional Light
+- 入力: `RippleSimulation.ResultTexture`（ワールド法線/高さ）、Directional Light
 - 参照: `sourceQuad`(水面), `targetQuad`(投影先), `directionalLight`
 - 出力: `causticsRT`（加算ブレンド用テクスチャ）
 - 調整: `energyScale`(明るさ), `normalInfluence`(水面法線影響), `colorTint`
@@ -34,13 +34,13 @@
 
 ## 入力テクスチャ
 - `boundaryTexture` : 白=水面、黒=地形。反射/固体セル判定に使用。
-- `depthTexture` : 0〜1 の水深。深いほど波速が上がる。
+- `depthTexture` : 0~1 の水深。深いほど波速が上がる。
 - `flowTexture` : RG で XY 流速。水面の移流に使用。
 - `externalForce` : 外部から与える力テクスチャ。`useExternalForce` が有効なとき加算。
 
 ## 内部RTと出力
 - `State` : R=現在高さ, G=前フレーム高さ。**RGFloat**
-- `Result` : RGB=法線(0〜1), A=高さ。**ARGBFloat**。`outputTexture` を設定すれば自動 Blit。
+- `Result` : RGB=Y-up ワールド法線(非パック, -1..1), A=高さ。**ARGBFloat**。`outputTexture` を設定すれば自動 Blit。
 - `ResultTemp` : MakeNormals の出力（ARGBFloat）→ BlurNormals で平滑化。
 - `Force` : ブラシ／外力の蓄積用。**RFloat**
 
@@ -59,3 +59,4 @@
 
 ## Movie
 https://github.com/user-attachments/assets/9df4a116-d174-4b62-95b5-62a68fcabf17
+

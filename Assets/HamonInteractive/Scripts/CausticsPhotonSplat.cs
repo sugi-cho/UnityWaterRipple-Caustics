@@ -87,7 +87,7 @@ namespace HamonInteractive
         private void EnsureMesh()
         {
             if (_mesh != null &&
-                _mesh.vertexCount == targetResolution.x * targetResolution.y)
+                _mesh.vertexCount == (targetResolution.x + 1) * (targetResolution.y + 1))
                 return;
 
             _mesh = BuildGridMesh(targetResolution.x, targetResolution.y);
@@ -122,29 +122,33 @@ namespace HamonInteractive
 
         private Mesh BuildGridMesh(int w, int h)
         {
-            var verts = new Vector3[w * h];
-            var uvs = new Vector2[w * h];
+            int vertW = w + 1;
+            int vertH = h + 1;
+            var verts = new Vector3[vertW * vertH];
+            var uvs = new Vector2[vertW * vertH];
+
             int idx = 0;
-            for (int y = 0; y < h; y++)
+            for (int y = 0; y < vertH; y++)
             {
-                for (int x = 0; x < w; x++)
+                float v = (float)y / h; // 0..1 inclusive
+                for (int x = 0; x < vertW; x++)
                 {
-                    Vector2 uv = new Vector2((x + 0.5f) / w, (y + 0.5f) / h);
-                    verts[idx] = new Vector3(uv.x, uv.y, 0f);
-                    uvs[idx] = uv;
+                    float u = (float)x / w; // 0..1 inclusive
+                    verts[idx] = new Vector3(u, v, 0f);
+                    uvs[idx] = new Vector2(u, v);
                     idx++;
                 }
             }
 
-            var tris = new int[(w - 1) * (h - 1) * 6];
+            var tris = new int[w * h * 6];
             int t = 0;
-            for (int y = 0; y < h - 1; y++)
+            for (int y = 0; y < h; y++)
             {
-                for (int x = 0; x < w - 1; x++)
+                for (int x = 0; x < w; x++)
                 {
-                    int i0 = y * w + x;
+                    int i0 = y * vertW + x;
                     int i1 = i0 + 1;
-                    int i2 = i0 + w;
+                    int i2 = i0 + vertW;
                     int i3 = i2 + 1;
                     tris[t++] = i0; tris[t++] = i2; tris[t++] = i1;
                     tris[t++] = i1; tris[t++] = i2; tris[t++] = i3;
@@ -204,17 +208,17 @@ namespace HamonInteractive
             Transform tgt = targetPlane != null ? targetPlane : transform;
             Vector3 srcScale = src.lossyScale;
             Vector3 tgtScale = tgt.lossyScale;
+            Vector3 tgtNormal = Vector3.Normalize(Vector3.Cross(tgt.right, tgt.up));
 
             photonCompute.SetVector("_SourcePos", src.position);
             photonCompute.SetVector("_SourceRight", src.right);
             photonCompute.SetVector("_SourceUp", src.up);
-            photonCompute.SetVector("_SourceNormal", Vector3.Normalize(Vector3.Cross(src.right, src.up)));
             photonCompute.SetVector("_SourceScale", new Vector2(srcScale.x, srcScale.y));
 
             photonCompute.SetVector("_TargetPos", tgt.position);
             photonCompute.SetVector("_TargetRight", tgt.right);
             photonCompute.SetVector("_TargetUp", tgt.up);
-            photonCompute.SetVector("_TargetNormal", Vector3.Normalize(Vector3.Cross(tgt.right, tgt.up)));
+            photonCompute.SetVector("_TargetNormal", tgtNormal);
             photonCompute.SetVector("_TargetScale", new Vector2(tgtScale.x, tgtScale.y));
 
             photonCompute.SetTexture(_kernelAcc, "_ResultTex", srcTex);
@@ -228,6 +232,11 @@ namespace HamonInteractive
             _material.SetFloat("_InvDensityScale", 1.0f / Mathf.Max(1e-6f, densityScale));
             _material.SetColor("_ColorTint", colorTint);
             _material.SetVector("_Resolution", new Vector4(targetResolution.x, targetResolution.y, 0, 0));
+            _material.SetVector("_TargetPos", tgt.position);
+            _material.SetVector("_TargetRight", tgt.right);
+            _material.SetVector("_TargetUp", tgt.up);
+            _material.SetVector("_TargetNormal", tgtNormal);
+            _material.SetVector("_TargetScale", new Vector2(tgtScale.x, tgtScale.y));
 
             // Additive draw directly to the current render target (camera must be set up before calling)
             Graphics.DrawMesh(_mesh, Matrix4x4.identity, _material, 0);

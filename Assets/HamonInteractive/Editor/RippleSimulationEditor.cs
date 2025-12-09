@@ -149,7 +149,7 @@ namespace HamonInteractive.Editor
 
             if (_showPreviews.boolValue)
             {
-                DrawPreview(sim.DebugResultTexture, "Result (Normal/Height)");
+                DrawPreview(sim.DebugResultTexture, "Result (WorldNormal/Height)");
                 DrawPreview(sim.DebugStateTexture, "State (R=Height G=PrevHeight)");
                 DrawPreview(sim.DebugForceTexture, "Force");
 

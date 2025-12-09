@@ -1,4 +1,4 @@
-// Caustics photon splat: source RT の法線から反射/屈折方向を計算し、受光平面上の密度を積算する
+// Caustics photon splat: source RT のワールド法線（非パック）から反射/屈折方向を計算し、受光平面上の密度を積算する
 
 #pragma kernel Clear
 #pragma kernel Accumulate
@@ -8,7 +8,7 @@
 
 RWStructuredBuffer<uint> _Density; // fixed-point (scaled by _DensityScale)
 
-Texture2D<float4> _ResultTex;      // RGB: normal encoded 0..1
+Texture2D<float4> _ResultTex;      // RGB: world normal (non-packed)
 SamplerState samplerLinearClamp
 {
     Filter = MIN_MAG_MIP_LINEAR;
@@ -33,7 +33,6 @@ cbuffer Params
     float3 _SourcePos;
     float3 _SourceRight;      // unit
     float3 _SourceUp;         // unit
-    float3 _SourceNormal;     // unit
     float2 _SourceScale;      // size (x,y)
 
     float3 _TargetPos;
@@ -41,11 +40,6 @@ cbuffer Params
     float3 _TargetUp;         // unit
     float3 _TargetNormal;     // unit
     float2 _TargetScale;      // size (x,y)
-}
-
-float3 DecodeNormal(float3 enc)
-{
-    return normalize(enc * 2.0 - 1.0);
 }
 
 [numthreads(THREAD_CLEAR, 1, 1)]
@@ -64,11 +58,8 @@ void Accumulate(uint3 id : SV_DispatchThreadID)
     if (id.x >= (uint)_SourceResolution.x || id.y >= (uint)_SourceResolution.y) return;
 
     float2 uv = (float2(id.xy) + 0.5) / float2(_SourceResolution);
-    float3 nTex = DecodeNormal(_ResultTex.SampleLevel(samplerLinearClamp, uv, 0).xyz);
-
-    // ワールド法線（平面法線とのブレンドで影響度を調整）
-    float3 nWorld = normalize(nTex.x * _SourceRight + nTex.y * _SourceUp + nTex.z * _SourceNormal);
-    nWorld = normalize(lerp(_SourceNormal, nWorld, saturate(_NormalInfluence)));
+    float3 nWorld = _ResultTex.SampleLevel(samplerLinearClamp, uv, 0).xyz;
+    nWorld = normalize(lerp(float3(0, 1, 0), nWorld, saturate(_NormalInfluence)));
 
     // 水面上のワールド座標
     float2 local = (uv - 0.5) * _SourceScale;
