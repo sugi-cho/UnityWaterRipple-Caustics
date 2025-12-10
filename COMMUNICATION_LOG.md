@@ -80,3 +80,5 @@
 - 2025-12-09 18:50 CausticsMeshVfxHelpers.hlsl を単一関数 Caustics_WritePositionIntensity のみに簡素化（位置+強度をまとめて書き込み）。
 - 2025-12-09 19:05 RippleSimulation を [ExecuteAlways] 化し、エディットモードでも出力RTが更新されプレビュー可能にした。
 - 2025-12-09 19:20 README をVFX/ShaderGraphベースのコースティクス構成に更新（CausticsMeshRenderer+VFX+ShaderGraph推奨、既存Compute版はレガシー扱い）。
+- 2025-12-10 13:31 「VFX Graph経由とComputeShader直呼びのコースティクス性能差を教えて」→ VFX Graphのオーバーヘッド/メリデメと計測指針を回答。
+- 2025-12-10 13:36 「Compute版がなくなったのでドキュメント更新して」→ READMEからレガシー記述を削除し、VFX/ShaderGraph版のみが現行である旨を追記。

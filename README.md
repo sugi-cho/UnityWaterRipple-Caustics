@@ -30,9 +30,7 @@
 - 仕組み: `CausticsMeshRenderer` が (W+1,H+1) メッシュと PositionIntensityTexture を生成し、VFX にバインド。VFX Graph で頂点ごとの位置/強度を書き込み、ShaderGraph で可視化する。
 - 注意: PositionIntensityTexture は外部生成(UAV有効)を VFX プロパティにセットする。VFX 内部でデフォルト生成させない。
 - 微調整: ShaderGraph 側で色/強度カーブ、VFX Graph 側で積算ロジックを編集して見た目を調整。
-
-### レガシー: コースティクス（Compute版）
-- コンポーネント: `CausticsRenderer`（既存の簡易反射パス。必要なら併用可）
+- 備考: 旧「Compute版コースティクス」パイプラインはプロジェクトから除去済み。Caustics は本構成のみを使用。
 
 ## 入力テクスチャ
 - `boundaryTexture` : 白=水面、黒=地形。反射/固体セル判定に使用。
