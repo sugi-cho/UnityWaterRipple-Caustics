@@ -1,11 +1,15 @@
 {
   "name": "cc.sugi.water-ripple-caustics",
-  "displayName": "Hamon Interactive",
+  "displayName": "WaterRipple-Caustics",
   "version": "1.0.0",
   "unity": "6000.2",
   "unityRelease": "8f1",
   "description": "Ripple simulation and caustics visualization bundled for URP + Visual Effect Graph.",
-  "keywords": ["ripple", "caustics", "visualeffectgraph"],
+  "keywords": [
+    "ripple",
+    "caustics",
+    "visualeffectgraph"
+  ],
   "category": "effects",
   "dependencies": {
     "com.unity.render-pipelines.universal": "17.2.0",
