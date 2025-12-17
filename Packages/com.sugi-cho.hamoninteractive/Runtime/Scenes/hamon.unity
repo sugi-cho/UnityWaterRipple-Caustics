@@ -242,7 +242,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 614ffa10f0716c64da1708c557e9f825, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::HamonInteractive.CausticsMeshRenderer
+  m_EditorClassIdentifier: HamonInteractive.Runtime::HamonInteractive.CausticsMeshRenderer
   ripple: {fileID: 2021220526}
   vfx: {fileID: 318205904}
   rippleTextureProperty: RippleTexture
@@ -1088,7 +1088,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dba720dd270a4d348b5bc0d14b066c38, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::HamonInteractive.RippleSimulation
+  m_EditorClassIdentifier: HamonInteractive.Runtime::HamonInteractive.RippleSimulation
   rippleCompute: {fileID: 7200000, guid: faf2081549b14ffda6cf8b4fe8ee8dc2, type: 3}
   resolution: {x: 1024, y: 512}
   waveSpeed: 50
@@ -1142,7 +1142,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bfb60557e1ad49949ad69e0efc609a70, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::HamonInteractive.RippleMouseDebug
+  m_EditorClassIdentifier: HamonInteractive.Runtime::HamonInteractive.RippleMouseDebug
   simulation: {fileID: 2021220526}
   inputCamera: {fileID: 2119533835}
   targetMeshCollider: {fileID: 1879381706}

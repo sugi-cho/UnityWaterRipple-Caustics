@@ -1,0 +1,14 @@
+{
+  "name": "HamonInteractive.Editor",
+  "references": [
+    "HamonInteractive.Runtime"
+  ],
+  "includePlatforms": ["Editor"],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": false,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
+}

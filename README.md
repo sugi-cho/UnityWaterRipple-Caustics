@@ -2,6 +2,11 @@
 
 波紋シミュレーションの簡易マニュアル。
 
+## パッケージ化について
+- `Assets/HamonInteractive/` の内容は `Packages/com.sugi-cho.hamoninteractive` に移動し、`Runtime`・`Editor`・`Samples~` という構成で提供しています。
+- 他プロジェクトで利用する場合は `Packages/manifest.json` に `"com.sugi-cho.hamoninteractive": "file:Packages/com.sugi-cho.hamoninteractive"` を追加してください。
+- サンプルシーンは `Packages/com.sugi-cho.hamoninteractive/Samples~/Scenes/hamon.unity` です。
+
 ## 主要パラメータ（`RippleSimulation`）
 - `resolution` : シミュレーション解像度。
 - `waveSpeed` : 波速。高いほど広がりが速く強い。
@@ -59,4 +64,3 @@
 
 ## Movie
 https://github.com/user-attachments/assets/9df4a116-d174-4b62-95b5-62a68fcabf17
-

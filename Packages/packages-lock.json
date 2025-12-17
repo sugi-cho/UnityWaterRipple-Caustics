@@ -1,5 +1,15 @@
 {
   "dependencies": {
+    "com.sugi-cho.hamoninteractive": {
+      "version": "file:com.sugi-cho.hamoninteractive",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {
+        "com.unity.render-pipelines.universal": "17.2.0",
+        "com.unity.visualeffectgraph": "17.2.0",
+        "com.unity.shadergraph": "17.2.0"
+      }
+    },
     "com.unity.burst": {
       "version": "1.8.25",
       "depth": 2,

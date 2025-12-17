@@ -1,0 +1,14 @@
+{
+  "name": "HamonInteractive.Runtime",
+  "references": [
+    "Unity.VisualEffectGraph.Runtime"
+  ],
+  "includePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
+}

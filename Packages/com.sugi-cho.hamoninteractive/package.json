@@ -1,0 +1,25 @@
+{
+  "name": "com.sugi-cho.hamoninteractive",
+  "displayName": "Hamon Interactive",
+  "version": "1.0.0",
+  "unity": "6000.2",
+  "unityRelease": "8f1",
+  "description": "Ripple simulation and caustics visualization bundled for URP + Visual Effect Graph.",
+  "keywords": ["ripple", "caustics", "visualeffectgraph"],
+  "category": "effects",
+  "dependencies": {
+    "com.unity.render-pipelines.universal": "17.2.0",
+    "com.unity.visualeffectgraph": "17.2.0",
+    "com.unity.shadergraph": "17.2.0"
+  },
+  "author": {
+    "name": "sugi-cho"
+  },
+  "samples": [
+    {
+      "displayName": "Hamon Ripple Scene",
+      "description": "Sample scene containing RippleSimulation + CausticsMeshRenderer/VFX.",
+      "path": "Samples~/Scenes"
+    }
+  ]
+}

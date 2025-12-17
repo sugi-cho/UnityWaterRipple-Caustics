@@ -82,3 +82,4 @@
 - 2025-12-09 19:20 README をVFX/ShaderGraphベースのコースティクス構成に更新（CausticsMeshRenderer+VFX+ShaderGraph推奨、既存Compute版はレガシー扱い）。
 - 2025-12-10 13:31 「VFX Graph経由とComputeShader直呼びのコースティクス性能差を教えて」→ VFX Graphのオーバーヘッド/メリデメと計測指針を回答。
 - 2025-12-10 13:36 「Compute版がなくなったのでドキュメント更新して」→ READMEからレガシー記述を削除し、VFX/ShaderGraph版のみが現行である旨を追記。
+- 2025-12-17 10:58 「HamonInteractive をパッケージ化したい」→ Assets/HamonInteractive を `Packages/com.sugi-cho.hamoninteractive` に移動して Runtime/Editor/Samples~/Scenes を整理し、manifest・lock・README・docs を更新。
