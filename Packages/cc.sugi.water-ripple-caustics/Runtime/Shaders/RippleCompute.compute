@@ -341,7 +341,11 @@ void Brush(uint3 id : SV_DispatchThreadID)
     if (coord.x >= _SimSize.x || coord.y >= _SimSize.y) return;
     float2 uv = (coord + 0.5) * _InvSimSize;
 
-    float dist = distance(uv, _Brush.xy);
+    float aspect = (_SimSize.y > 0) ? (_SimSize.x / (float)_SimSize.y) : 1.0;
+    float2 delta = uv - _Brush.xy;
+    delta.x *= aspect;
+
+    float dist = length(delta);
     if (dist > _Brush.z) return;
 
     float t = saturate(1.0 - dist / _Brush.z);
