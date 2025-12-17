@@ -13,7 +13,7 @@
 - **RWTexture2D を UAV で生成する**  
   - `enableRandomWrite = true` を付けて生成し、VFX の exposed プロパティに外部からセット。VFX 内部でデフォルト生成させない。
 - **include パスはプロジェクト基準で統一**  
-- `Packages/com.sugi-cho.hamoninteractive/Runtime/Shaders/HLSL/...` からの相対に揃え、VFXCommon など既定の include を重複させない。
+- `Packages/cc.sugi.water-ripple-caustics/Runtime/Shaders/HLSL/...` からの相対に揃え、VFXCommon など既定の include を重複させない。
 - **再帰・多重委譲を避ける**  
   - 関数同士の呼び合いで再帰と誤判定される場合がある。1 関数内に処理をまとめ、必要最小限のヘルパーに留める。
 - **gridSize などは型を揃える**  

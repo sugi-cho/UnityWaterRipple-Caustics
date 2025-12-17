@@ -7,7 +7,7 @@
     "jp.keijiro.metamesh": "1.2.1",
     "jp.keijiro.noiseshader": "3.0.1",
     "jp.keijiro.shadergraphassets": "2.5.2",
-    "com.sugi-cho.hamoninteractive": "file:Packages/com.sugi-cho.hamoninteractive",
+    "cc.sugi.water-ripple-caustics": "file:Packages/cc.sugi.water-ripple-caustics",
     "com.unity.modules.accessibility": "1.0.0",
     "com.unity.modules.ai": "1.0.0",
     "com.unity.modules.androidjni": "1.0.0",

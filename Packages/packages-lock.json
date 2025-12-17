@@ -1,7 +1,7 @@
 {
   "dependencies": {
-    "com.sugi-cho.hamoninteractive": {
-      "version": "file:com.sugi-cho.hamoninteractive",
+    "cc.sugi.water-ripple-caustics": {
+      "version": "file:cc.sugi.water-ripple-caustics",
       "depth": 0,
       "source": "embedded",
       "dependencies": {
