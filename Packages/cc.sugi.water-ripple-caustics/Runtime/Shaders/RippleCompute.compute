@@ -213,15 +213,6 @@ void SimStep(uint3 id : SV_DispatchThreadID)
     hNext *= decay;
     h *= decay;
 
-    // Dead zone (relaxed to let very small waves propagate)
-    float vel = hNext - h;
-    const float deadZone = 1e-5;
-    if (abs(hNext) < deadZone && abs(vel) < deadZone)
-    {
-        hNext = 0;
-        h = 0;
-    }
-
     // 発散対策のハードクランプ
     hNext = clamp(hNext, -256.0, 256.0);
 
@@ -362,4 +353,3 @@ void ClearForce(uint3 id : SV_DispatchThreadID)
     if (coord.x >= _SimSize.x || coord.y >= _SimSize.y) return;
     _ForceTarget[coord] = 0.0;
 }
-

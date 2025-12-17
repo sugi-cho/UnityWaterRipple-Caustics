@@ -84,3 +84,4 @@
 - 2025-12-10 13:36 「Compute版がなくなったのでドキュメント更新して」→ READMEからレガシー記述を削除し、VFX/ShaderGraph版のみが現行である旨を追記。
 - 2025-12-17 10:58 「HamonInteractive をパッケージ化したい」→ Assets/HamonInteractive を `Packages/cc.sugi.water-ripple-caustics` に移動して Runtime/Editor/Samples~/Scenes を整理し、manifest・lock・README・docs を更新。
 - 2025-12-18 01:04 「Forceデバッグが横長になる」→ Brushカーネルで横長解像度時にX方向をアスペクト補正し、Force入力が正円になるよう制御。
+- 2025-12-18 01:26 「微小な波動でも伝搬してほしい」→ SimStep 内のデッドゾーン判定を削除し、わずかな高さ/速度でもそのまま波動として残るよう変更。

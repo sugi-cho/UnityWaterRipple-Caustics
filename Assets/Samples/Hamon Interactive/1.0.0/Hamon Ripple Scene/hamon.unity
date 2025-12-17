@@ -247,11 +247,7 @@ MonoBehaviour:
   vfx: {fileID: 318205904}
   rippleTextureProperty: RippleTexture
   meshProperty: SourceMesh
-  vertexBufferProperty: MeshVertexBuffer
-  positionBufferProperty: PositionBuffer
-  intensityBufferProperty: IntensityBuffer
   positionIntensityTextureProperty: PositionIntensityTexture
-  vertexCountProperty: VertexCount
   autoUpdate: 1
 --- !u!73398921 &318205903
 VFXRenderer:
@@ -365,7 +361,7 @@ VisualEffect:
       - m_Value: {fileID: 0}
         m_Name: PositionIntensityTexture
         m_Overridden: 1
-      - m_Value: {fileID: 881819068}
+      - m_Value: {fileID: 0}
         m_Name: RippleTexture
         m_Overridden: 1
       - m_Value: {fileID: 0}
@@ -487,43 +483,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 318205905}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
---- !u!84 &881819068
-RenderTexture:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: Ripple_Result
-  m_ImageContentsHash:
-    serializedVersion: 2
-    Hash: 00000000000000000000000000000000
-  m_IsAlphaChannelOptional: 0
-  serializedVersion: 6
-  m_Width: 1024
-  m_Height: 512
-  m_AntiAliasing: 1
-  m_MipCount: -1
-  m_DepthStencilFormat: 0
-  m_ColorFormat: 52
-  m_MipMap: 0
-  m_GenerateMips: 1
-  m_SRGB: 0
-  m_UseDynamicScale: 0
-  m_UseDynamicScaleExplicit: 0
-  m_BindMS: 0
-  m_EnableCompatibleFormat: 1
-  m_EnableRandomWrite: 1
-  m_TextureSettings:
-    serializedVersion: 2
-    m_FilterMode: 1
-    m_Aniso: 1
-    m_MipBias: 0
-    m_WrapU: 1
-    m_WrapV: 1
-    m_WrapW: 1
-  m_Dimension: 2
-  m_VolumeDepth: 1
-  m_ShadowSamplingMode: 2
 --- !u!1 &1362022342
 GameObject:
   m_ObjectHideFlags: 0
@@ -1090,15 +1049,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: HamonInteractive.Runtime::HamonInteractive.RippleSimulation
   rippleCompute: {fileID: 7200000, guid: faf2081549b14ffda6cf8b4fe8ee8dc2, type: 3}
-  resolution: {x: 1024, y: 512}
-  waveSpeed: 50
+  resolution: {x: 2048, y: 512}
+  waveSpeed: 10
   timeScale: 1
-  damping: 0.1
+  damping: 0.01
   amplitudeDecay: 0.01
   depthScale: 1
   flowScale: 1
   boundaryBounce: 1
-  forceToVelocity: 16
+  forceToVelocity: 1
   normalGradScale: 1
   normalBlurRadius: 1
   normalBlurSigma: 1.5
@@ -1107,7 +1066,7 @@ MonoBehaviour:
   useFixedTimeStep: 1
   fixedTimeStep: 0.008333334
   maxSubSteps: 8
-  maxAccumulatedTime: 0.01
+  maxAccumulatedTime: 0.25
   outputTexture: {fileID: 8400000, guid: a1e3e2d2df09c1447aa0f2e39ec0bbcd, type: 2}
   autoBlitResult: 1
   boundaryTexture: {fileID: 0}
